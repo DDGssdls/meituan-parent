@@ -13,7 +13,7 @@ import java.io.IOException;
  * @Date: 2020/5/20 10:23
  * @Description:
  */
-@Configuration
+//@Configuration
 public class RedissonConfig {
 
     /**

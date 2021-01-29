@@ -11,9 +11,9 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
  * @Date: 2020/5/11 13:58
  * @Description:
  */
-@Configuration
+//@Configuration
 //@MapperScan("com.edu.gulimail.*.dao")
-@EnableTransactionManagement
+//@EnableTransactionManagement
 public class MybatisConfig {
     @Bean
     public PaginationInterceptor paginationInterceptor() {

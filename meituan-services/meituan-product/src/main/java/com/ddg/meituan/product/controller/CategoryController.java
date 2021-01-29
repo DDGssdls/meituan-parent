@@ -1,15 +1,12 @@
 package com.ddg.meituan.product.controller;
 
 import java.util.Arrays;
+import java.util.List;
 import java.util.Map;
 
 //import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.ddg.meituan.product.entity.CategoryEntity;
 import com.ddg.meituan.product.service.CategoryService;
@@ -40,6 +37,17 @@ public class CategoryController {
         PageUtils page = categoryService.queryPage(params);
 
         return R.ok().put("page", page);
+    }
+
+    /**
+     * 获取所有的菜单分类 以树状结构返回
+     * @return
+     */
+    @GetMapping("/listWithTree")
+    public R getListWithTree(){
+        List<CategoryEntity> list =  categoryService.getListWithTree();
+
+        return R.ok().put("data", list);
     }
 
 
@@ -86,5 +94,6 @@ public class CategoryController {
 
         return R.ok();
     }
+
 
 }

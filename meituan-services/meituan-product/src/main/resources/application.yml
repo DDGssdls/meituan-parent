@@ -21,7 +21,8 @@ spring:
 
   redis:
     host: ${ipAddr}
-#   设置缓存类型
+    port: 6379
+  #   设置缓存类型
   cache:
     type: redis
 #   设置存活时间

@@ -15,7 +15,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  * @date 2021/1/28 17:14
  * @email: wangzhijie0908@gmail.com
  */
-@SpringBootApplication
+@SpringBootApplication(scanBasePackages = "com.ddg.meituan")
 public class ProductApplication {
     public static void main(String[] args) {
         SpringApplication.run(ProductApplication.class, args);
