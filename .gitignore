@@ -1,0 +1,27 @@
+# Created by .ignore support plugin (hsz.mobi)
+.settings/
+.project
+.idea/
+*.iml
+target
+.classpath
+.DS_Store
+/meituan-services/meituan-search/target/
+meituan-common/meituan-base/src/main/resources/
+meituan-common/meituan-base/src/test/
+meituan-common/meituan-gateway/src/
+meituan-services/meituan-authserver/src/main/resources/
+meituan-services/meituan-authserver/src/test/
+meituan-services/meituan-cart/src/main/resources/
+meituan-services/meituan-cart/src/test/
+meituan-services/meituan-member/src/main/resources/
+meituan-services/meituan-member/src/test/
+meituan-services/meituan-order/src/main/resources/
+meituan-services/meituan-order/src/test/
+meituan-services/meituan-oss/src/main/resources/
+meituan-services/meituan-oss/src/test/
+meituan-services/meituan-product/src/main/resources/mapper/
+meituan-services/meituan-product/src/main/resources/templates/
+meituan-services/meituan-product/src/test/
+meituan-services/meituan-search/src/main/resources/
+meituan-services/meituan-search/src/test/
