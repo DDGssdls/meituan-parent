@@ -11,6 +11,8 @@ server:
 
 spring:
   # 环境 dev|test|prod
+  application:
+    name: meituan-admin
   profiles:
     active: dev
   # jackson时间格式化
@@ -74,3 +76,4 @@ renren:
     # token有效时长，7天，单位秒
     expire: 604800
     header: token
+

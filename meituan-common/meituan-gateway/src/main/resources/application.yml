@@ -27,7 +27,7 @@ spring:
           filters:
             - RewritePath=/api/oss/(?<segment>/?.*), /$\{segment}
         - id: admin_route
-          uri: lb://renren-fast
+          uri: lb://meituan-admin
           predicates:
             - Path=/api/**
           filters:
