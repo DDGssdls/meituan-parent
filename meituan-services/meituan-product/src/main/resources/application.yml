@@ -1,5 +1,8 @@
 ipAddr: 49.232.68.245
+# 配置应用名称 nacos 使用
 spring:
+  application:
+    name: meituan-product
   datasource:
     username: root
     password: root

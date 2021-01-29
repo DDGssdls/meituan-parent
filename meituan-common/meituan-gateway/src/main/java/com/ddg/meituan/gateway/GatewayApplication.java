@@ -1,4 +1,4 @@
-package com.ddg.meituan.product;
+package com.ddg.meituan.gateway;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -13,13 +13,13 @@ import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
  * @version 1.0
  * <p>
  * ========================================================================
- * @date 2021/1/28 17:14
+ * @date 2021/1/29 17:33
  * @email: wangzhijie0908@gmail.com
  */
-@SpringBootApplication(scanBasePackages = "com.ddg.meituan")
+@SpringBootApplication
 @EnableDiscoveryClient
-public class ProductApplication {
+public class GatewayApplication {
     public static void main(String[] args) {
-        SpringApplication.run(ProductApplication.class, args);
+        SpringApplication.run(GatewayApplication.class, args);
     }
 }
