@@ -1,9 +1,6 @@
 package com.ddg.meituan.product.entity;
 
-import com.baomidou.mybatisplus.annotation.TableField;
-import com.baomidou.mybatisplus.annotation.TableId;
-import com.baomidou.mybatisplus.annotation.TableLogic;
-import com.baomidou.mybatisplus.annotation.TableName;
+import com.baomidou.mybatisplus.annotation.*;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -16,7 +13,7 @@ import lombok.Data;
  * 
  * @author 
  * @email 
- * @date 2021-01-29 11:22:05
+ * @date 2021-01-30 16:45:20
  */
 @Data
 @TableName("pms_category")
@@ -42,10 +39,13 @@ public class CategoryEntity implements Serializable {
 	private Integer catLevel;
 	/**
 	 * 是否显示[0-不显示，1显示]
-	 * 嗲表逻辑删除字段
 	 */
-	//@TableLogic
 	private Integer showStatus;
+	/**
+	 * 逻辑删除 1为删除 0删除
+	 */
+	@TableLogic
+	private Integer deletedStatus;
 	/**
 	 * 排序
 	 */
@@ -55,13 +55,15 @@ public class CategoryEntity implements Serializable {
 	 */
 	private String icon;
 	/**
-	 * 计量单位
+	 * 创建时间
 	 */
-	private String productUnit;
+	@TableField(fill = FieldFill.INSERT)
+	private Date createTime;
 	/**
-	 * 商品数量
+	 * 更新时间
 	 */
-	private Integer productCount;
+	@TableField(fill = FieldFill.INSERT_UPDATE)
+	private Date updateTime;
 
 	@TableField(exist = false)
 	private List<CategoryEntity> children;

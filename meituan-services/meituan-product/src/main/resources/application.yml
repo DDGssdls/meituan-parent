@@ -76,3 +76,7 @@ meituan:
     core-size: 20
     max-size: 200
     keep-alive-time: 10
+  # 方法返回结果为空 是否是进行缓存 默认false
+  rediscache:
+    cachenull: false
+

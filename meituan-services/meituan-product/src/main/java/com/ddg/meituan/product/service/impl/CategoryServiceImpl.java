@@ -4,13 +4,14 @@ package com.ddg.meituan.product.service.impl;
 import com.ddg.meituan.common.annotation.RedisCache;
 import com.ddg.meituan.common.annotation.RemoveCache;
 import com.ddg.meituan.product.constant.ProductConstant;
+import com.ddg.meituan.product.dao.CategoryDao;
+import com.ddg.meituan.product.entity.CategoryEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
@@ -18,8 +19,6 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.ddg.meituan.common.utils.PageUtils;
 import com.ddg.meituan.common.utils.Query;
 
-import com.ddg.meituan.product.dao.CategoryDao;
-import com.ddg.meituan.product.entity.CategoryEntity;
 import com.ddg.meituan.product.service.CategoryService;
 import org.springframework.util.StringUtils;
 

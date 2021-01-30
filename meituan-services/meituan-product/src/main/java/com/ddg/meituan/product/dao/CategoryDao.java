@@ -1,7 +1,7 @@
 package com.ddg.meituan.product.dao;
 
-import com.ddg.meituan.product.entity.CategoryEntity;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.ddg.meituan.product.entity.CategoryEntity;
 import org.apache.ibatis.annotations.Mapper;
 
 /**
@@ -9,7 +9,7 @@ import org.apache.ibatis.annotations.Mapper;
  * 
  * @author 
  * @email 
- * @date 2021-01-29 11:22:05
+ * @date 2021-01-30 16:45:20
  */
 @Mapper
 public interface CategoryDao extends BaseMapper<CategoryEntity> {

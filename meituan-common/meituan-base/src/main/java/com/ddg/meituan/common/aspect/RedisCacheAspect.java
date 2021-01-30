@@ -12,6 +12,7 @@ import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
 import org.aspectj.lang.reflect.MethodSignature;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
@@ -40,6 +41,9 @@ public class RedisCacheAspect {
 
     @Autowired
     private StringRedisTemplate stringRedisTemplate;  //注入redis模板
+    // 默认不进行空值缓存
+    @Value("${meituan.rediscache.cachenull:false}")
+    private boolean cacheNull;
 
     @Pointcut("@annotation(com.ddg.meituan.common.annotation.RedisCache)") //定义切点
     public void redisCachePointCut() {
@@ -65,6 +69,7 @@ public class RedisCacheAspect {
                     if (isList) {//如果是list类型的返回数据
                         JsonParser jsonParser = new JsonParser();
                         JsonArray jsonArray = jsonParser.parse(realValue).getAsJsonArray();
+
                         List resultList = new ArrayList();
                         if (jsonArray != null) {
                             for (JsonElement element : jsonArray) {
@@ -77,7 +82,10 @@ public class RedisCacheAspect {
                 } else {
                     Object result = point.proceed();
                     realValue = new Gson().toJson(result);
-                    stringRedisTemplate.opsForValue().set(redisKey, realValue, timeOut, TimeUnit.SECONDS);
+                    // 配置是否是可以缓存空值：要是 list类型的数据返回空List 返回的可能是"[]"
+                    if (cacheNull || (!"[]".equals(realValue) && !StringUtils.isEmpty(realValue))){
+                        stringRedisTemplate.opsForValue().set(redisKey, realValue, timeOut, TimeUnit.SECONDS);
+                    }
                     return result;
                 }
             }
