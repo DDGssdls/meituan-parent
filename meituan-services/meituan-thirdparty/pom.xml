@@ -9,7 +9,7 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>meituan-oss</artifactId>
+    <artifactId>meituan-thirdparty</artifactId>
 
 
 </project>

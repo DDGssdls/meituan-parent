@@ -3,58 +3,55 @@ package com.ddg.meituan.product.entity;
 import com.baomidou.mybatisplus.annotation.*;
 
 import java.io.Serializable;
-
 import java.util.Date;
-import java.util.List;
-
 import lombok.Data;
 
 /**
- * 商品三级分类
+ * 品牌
  * 
  * @author 
  * @email 
- * @date 2021-01-30 16:45:20
+ * @date 2021-01-30 17:44:19
  */
 @Data
-@TableName("pms_category")
-public class CategoryEntity implements Serializable {
+@TableName("pms_brand")
+public class BrandEntity implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	/**
-	 * 分类id
+	 * 品牌id
 	 */
 	@TableId(type = IdType.AUTO)
-	private Long catId;
+	private Long brandId;
 	/**
-	 * 分类名称
+	 * 品牌名
 	 */
 	private String name;
 	/**
-	 * 父分类id
+	 * 品牌logo地址
 	 */
-	private Long parentCid;
+	private String logo;
 	/**
-	 * 层级
+	 * 介绍
 	 */
-	private Integer catLevel;
+	private String descript;
 	/**
-	 * 是否显示[0-不显示，1显示]
+	 * 显示状态[0-不显示；1-显示]
 	 */
 	private Integer showStatus;
 	/**
-	 * 逻辑删除 1为删除 0删除
+	 * 检索首字母
 	 */
-	@TableLogic
-	private Integer deletedStatus;
+	private String firstLetter;
 	/**
 	 * 排序
 	 */
 	private Integer sort;
 	/**
-	 * 图标地址
+	 * 逻辑删除
 	 */
-	private String icon;
+	@TableLogic
+	private Integer deletedStatus;
 	/**
 	 * 创建时间
 	 */
@@ -65,8 +62,5 @@ public class CategoryEntity implements Serializable {
 	 */
 	@TableField(fill = FieldFill.INSERT_UPDATE)
 	private Date updateTime;
-
-	@TableField(exist = false)
-	private List<CategoryEntity> children;
 
 }

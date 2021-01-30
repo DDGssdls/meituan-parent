@@ -1,10 +1,10 @@
-package com.ddg.meituan;
+package com.ddg.meituan.thridparty;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 /**
- * Description:
+ * Description: 第三方服务
  * ========================================================================
  * ------------------------------------------------------------------------
  *
@@ -16,8 +16,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  * @email:
  */
 @SpringBootApplication
-public class OssApplication {
+public class ThirdPartyApplication {
     public static void main(String[] args) {
-        SpringApplication.run(OssApplication.class, args);
+        SpringApplication.run(ThirdPartyApplication.class, args);
     }
 }
