@@ -1,5 +1,7 @@
 package com.ddg.meituan.product.constant;
 
+import org.omg.PortableInterceptor.INACTIVE;
+
 /**
  * Description: 商品服务所使用的常量
  * ========================================================================
@@ -14,7 +16,16 @@ package com.ddg.meituan.product.constant;
  */
 public interface ProductConstant {
 
-    Integer CAT_LEVEL = 1;
+    Integer CAT_LEVEL_ONE = 1;
+    Integer CAT_LEVEL_TWO = 2;
+    Integer CAT_LEVEL_THREE = 3;
     Integer MAX_FATHER_LENGTH = 16;
-    Integer MAX_COUNT = 15;
+    Integer MAX_LEVEL3_COUNT = 15;
+    Integer MAX_LEVEL2_COUNT = 5;
+    Integer SHOW_STATUS = 1;
+    Integer UN_SHOW_STATUS = 0;
+    String CART_ID = "cartId";
+    String PARENT_CART_ID = "parent_cid";
+
+    String CART_LEVEL = "cat_level";
 }

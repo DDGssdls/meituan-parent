@@ -6,7 +6,7 @@ spring:
   datasource:
     username: root
     password: root
-    url: jdbc:mysql://${ipAddr}:3306/meituan-product?serverTimezone=Asia/Shanghai
+    url: jdbc:mysql://${ipAddr}:3306/meituan-product?serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf8
     driver-class-name: com.mysql.cj.jdbc.Driver
   cloud:
     nacos:
@@ -38,19 +38,31 @@ spring:
 #    cache-names:
 
 mybatis-plus:
+  configuration:
+    # 是否开启自动驼峰命名规则（camel case）映射，
+    map-underscore-to-camel-case: true
+
   mapper-locations: classpath:/mapper/**/*.xml
   global-config:
     db-config:
       id-type: auto
-      # 配置逻辑删除 1代表删除 0代表已删除
-      logic-delete-value: 1
-      logic-not-delete-value: 0
+      # 配置全局逻辑删除 1代表未删除 0代表已删除 第二步配置逻辑删除组件 第三步配置逻辑删除的字段 实体类上
+      logic-delete-value: 0
+      logic-not-delete-value: 1
+
 
 server:
   port: 8100
 logging:
   level:
-    com.ddg.meituan: error
+    com.ddg.meituan: debug
+    org:
+      springframework:
+        cloud: error
+    com:
+      alibaba:
+        nacos: error
+
 #    org.springframework.cloud.openfeign: debug
 #    org.springframework.cloud.sleuth: debug
 
