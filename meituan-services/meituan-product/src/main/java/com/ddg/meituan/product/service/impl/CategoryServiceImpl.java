@@ -42,8 +42,7 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryDao, CategoryEntity
     }
 
     @Override
-    @RedisCache(redisKey = "redis_list_tree", resultObjClass = "com.ddg.meituan.product.entity.CategoryEntity",
-            isList = true)
+    @RedisCache(redisKey = "redis_list_tree", resClass = CategoryEntity.class, isList = true)
     public List<CategoryEntity> getListWithTree() {
         //首先是获取所有的CategoryEntity
         List<CategoryEntity> list = categoryDao.selectList(null);
@@ -53,23 +52,25 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryDao, CategoryEntity
         // 进行父子结构的组装：每一个分类下最多返回15个子节点
         List<CategoryEntity> fatherList = list.stream()
                 .map(categoryEntity -> setChildren(categoryEntity, list, ProductConstant.MAX_LEVEL3_COUNT))
-                .filter(categoryEntity -> ProductConstant.CAT_LEVEL_ONE.equals(categoryEntity.getCatLevel()) )
+                .filter(categoryEntity -> ProductConstant.CAT_LEVEL_ONE.equals(categoryEntity.getCatLevel()))
                 .sorted(Comparator.comparingInt(CategoryEntity::getSort)).limit(ProductConstant.MAX_FATHER_LENGTH).collect(Collectors.toList());
         return fatherList;
     }
 
     @Override
-    @RemoveCache("redis_list_tree")
+
+    @RemoveCache(value = {"redis_list_tree", "redis_list_parent", "redis_key_page"})
     public void changeStatus(CategoryEntity categoryEntity) {
         // 返回的直接是修改之后的显示状态 直接进行数据库的更新即可
         categoryDao.updateById(categoryEntity);
     }
 
     @Override
+    @RedisCache(redisKey = "redis_key_page", resClass = PageUtils.class)
     public PageUtils queryPageById(Map<String, Object> params) {
         String cartIdStr = (String) params.get(ProductConstant.CART_ID);
         QueryWrapper<CategoryEntity> wrapper = new QueryWrapper<>();
-        if (!StringUtils.isEmpty(cartIdStr)){
+        if (!StringUtils.isEmpty(cartIdStr)) {
             Long cartId = Long.parseLong(cartIdStr);
             wrapper.eq(ProductConstant.PARENT_CART_ID, cartId);
         }
@@ -81,20 +82,24 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryDao, CategoryEntity
     }
 
     @Override
+    @RedisCache(redisKey = "redis_list_parent", resClass = CategoryEntity.class, isList = true)
     public List<CategoryEntity> getParentList() {
         QueryWrapper<CategoryEntity> wrapper = new QueryWrapper<>();
         wrapper.ne(ProductConstant.CART_LEVEL, ProductConstant.CAT_LEVEL_THREE);
         List<CategoryEntity> list = categoryDao.selectList(wrapper);
-        List<CategoryEntity> collect = list.stream().map(categoryEntity -> setChildren(categoryEntity, list,
-                ProductConstant.MAX_LEVEL2_COUNT))
-                .filter(categoryEntity -> ProductConstant.CAT_LEVEL_ONE.equals(categoryEntity.getCatLevel()) )
-                .sorted(Comparator.comparingInt(CategoryEntity::getSort)).limit(ProductConstant.MAX_FATHER_LENGTH).collect(Collectors.toList());
+        List<CategoryEntity> collect =
+                list.stream()
+                        .filter(categoryEntity -> ProductConstant.SHOW_STATUS.equals(categoryEntity.getShowStatus()))
+                        .map(categoryEntity -> setChildren(categoryEntity, list, ProductConstant.MAX_LEVEL2_COUNT))
+                        .filter(categoryEntity -> ProductConstant.CAT_LEVEL_ONE.equals(categoryEntity.getCatLevel()))
+                        .sorted(Comparator.comparingInt(CategoryEntity::getSort)).limit(ProductConstant.MAX_FATHER_LENGTH).collect(Collectors.toList());
         return collect;
     }
 
     // 进行父子结构的组装：
     private CategoryEntity setChildren(CategoryEntity categoryEntity, List<CategoryEntity> list, Integer limit) {
         List<CategoryEntity> collect = list.stream()
+                .filter(categoryEntity1 -> ProductConstant.SHOW_STATUS.equals(categoryEntity1.getShowStatus()))
                 .filter(categoryEntity1 -> categoryEntity.getCatId().equals(categoryEntity1.getParentCid()))
                 .limit(limit).collect(Collectors.toList());
         categoryEntity.setChildren(collect);

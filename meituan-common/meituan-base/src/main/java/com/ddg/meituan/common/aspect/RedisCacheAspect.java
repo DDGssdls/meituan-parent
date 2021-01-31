@@ -60,12 +60,11 @@ public class RedisCacheAspect {
                 Gson gson = new Gson();
                 String redisKey = redisCache.redisKey();
                 Integer timeOut = Integer.parseInt(redisCache.timeOut());
-                String resultObj = redisCache.resultObjClass();
+                Class resultObjClass = redisCache.resClass();
                 boolean isList = redisCache.isList();
                 String realValue = stringRedisTemplate.opsForValue().get(redisKey); //获取redis数据
                 if (!StringUtils.isEmpty(realValue)) {
                     log.info("redisValue:{}", realValue);
-                    Class resultObjClass = Class.forName(resultObj);
                     if (isList) {//如果是list类型的返回数据
                         JsonParser jsonParser = new JsonParser();
                         JsonArray jsonArray = jsonParser.parse(realValue).getAsJsonArray();
@@ -90,7 +89,7 @@ public class RedisCacheAspect {
                 }
             }
         }catch (Exception e){
-            log.error("redisCachePointCutError!", e);
+            log.error("redisCachePointCutError!", e.getMessage());
             return point.proceed();  //异常直接执行方法
         }
         return null;

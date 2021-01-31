@@ -54,19 +54,12 @@ public class RemoveCacheAspect {
         try {
             if (removeCache != null) {
                 // 注解上的描述
-                String value = removeCache.value();
+                String[] value = removeCache.value();
                 // 从获取redis数据
-                String realValue = stringRedisTemplate.opsForValue().get(value);
-                if (StringUtils.isEmpty(realValue)) {
-                    Object proceed = point.proceed();
-                    log.info("缓存已经过期！");
-                    return proceed;
-                }else{
-                    stringRedisTemplate.delete(value);
-                    return point.proceed();
+                for (String key : value) {
+                    stringRedisTemplate.delete(key);
                 }
-
-
+                return point.proceed();
             }
         } catch (Exception e) {
             log.error("removeCacheError!", e);
