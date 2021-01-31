@@ -9,15 +9,15 @@ spring:
           filters:
             - RewritePath=/api/(?<segment>/?.*), /$\{segment}
         - id: member_route
-          uri: lb://gulimail-member
+          uri: lb://meituan-member
           predicates:
             - Path=/api/member/**
           filters:
             - RewritePath=/api/(?<segment>/?.*), /$\{segment}
-        - id: ware_route
-          uri: lb://gulimail-ware
+        - id: auth_route
+          uri: lb://meituan-authserver
           predicates:
-            - Path=/api/ware/**
+            - Path=/api/auth/**
           filters:
             - RewritePath=/api/(?<segment>/?.*), /$\{segment}
         - id: oss_route

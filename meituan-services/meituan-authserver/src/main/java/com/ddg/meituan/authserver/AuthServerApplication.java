@@ -1,10 +1,13 @@
-package com.ddg.meituan;
+package com.ddg.meituan.authserver;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
+import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
+import org.springframework.cloud.openfeign.EnableFeignClients;
 
 /**
- * Description:
+ * Description: 认证中心服务
  * ========================================================================
  * ------------------------------------------------------------------------
  *
@@ -15,7 +18,9 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  * @date 2021/1/28 17:06
  * @email:
  */
-@SpringBootApplication
+@SpringBootApplication(exclude = DataSourceAutoConfiguration.class)
+@EnableDiscoveryClient
+@EnableFeignClients
 public class AuthServerApplication {
 
     public static void main(String[] args) {

@@ -1,11 +1,7 @@
-package com.ddg.meituan.thridparty.Service;
-
-import com.ddg.meituan.common.utils.R;
-
-import java.util.Map;
+package com.ddg.meituan.authserver.constant;
 
 /**
- * Description:
+ * Description: AuthServer 服务常量
  * ========================================================================
  * ------------------------------------------------------------------------
  *
@@ -13,11 +9,13 @@ import java.util.Map;
  * @version 1.0
  * <p>
  * ========================================================================
- * @date 2021/1/30 17:58
+ * @date 2021/1/31 17:24
  * @email: wangzhijie0908@gmail.com
  */
-public interface MsmService {
+public interface AuthServerConstant {
 
+    Long STORE_TIME = 5L;
 
-    R sendCode(String phoneNum);
+    Long ONE_MIN  = 60L * 1000;
+
 }

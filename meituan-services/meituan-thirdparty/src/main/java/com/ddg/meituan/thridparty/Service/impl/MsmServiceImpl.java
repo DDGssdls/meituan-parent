@@ -9,13 +9,21 @@ import com.aliyuncs.exceptions.ClientException;
 import com.aliyuncs.http.MethodType;
 import com.aliyuncs.profile.DefaultProfile;
 
+import com.ddg.meituan.common.utils.R;
+import com.ddg.meituan.common.utils.RandomUtil;
 import com.ddg.meituan.thridparty.Service.MsmService;
+import com.ddg.meituan.thridparty.ThirdPartyApplication;
 import com.ddg.meituan.thridparty.component.OSSConfigurationProperties;
+import com.ddg.meituan.thridparty.constant.ThirdPartyConstant;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
+import org.springframework.web.bind.annotation.PathVariable;
 
+import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
 /**
  * Description:
@@ -33,14 +41,45 @@ import java.util.Map;
 public class MsmServiceImpl implements MsmService {
 
     private final OSSConfigurationProperties properties;
+    private final RedisTemplate<String, String> redisTemplate;
     @Autowired
-    public MsmServiceImpl(OSSConfigurationProperties constantPropertiesUtils) {
+    public MsmServiceImpl(OSSConfigurationProperties constantPropertiesUtils,
+                          RedisTemplate<String, String> redisTemplate) {
         this.properties = constantPropertiesUtils;
+        this.redisTemplate = redisTemplate;
+    }
+
+    @Override
+    public R sendCode(String phoneNum){
+        // 先从redis中进行获取验证码
+        String code = redisTemplate.opsForValue().get(phoneNum);
+        boolean isSend = false;
+        // 判断是否是在redis中有值
+        if(StringUtils.isEmpty(code)){
+            // 要是获取不到 使用阿里云进行发送
+            code = RandomUtil.getSixBitRandom();
+            Map<String, String> param = new HashMap<>();
+            param.put("code", code);
+            // 调用service进行发送：
+            isSend = sendCodeByAly(param, phoneNum);
+            if (isSend){
+                // 成功发送之后 将数据放到redis中 设置超时时间 5分钟
+                long l = System.currentTimeMillis();
+                redisTemplate.opsForValue().set(phoneNum, code+"_"+ l, ThirdPartyConstant.STORE_TIME, TimeUnit.MINUTES);
+            }
+        }else{
+            String[] s = code.split("_");
+            long l = System.currentTimeMillis();
+            if (l - Long.parseLong(s[1]) > ThirdPartyConstant.ONE_MIN){
+                return  R.error("不能在60秒内重复发送");
+            }
+
+        }
+        return R.ok().put("isSend", isSend);
     }
 
     // 使用阿里云短信服务进行发送的方法
-    @Override
-    public boolean sendCodeByAly(Map<String, String> param, String phoneNum) {
+    private boolean sendCodeByAly(Map<String, String> param, String phoneNum) {
         String id = properties.getKeyId();
         String accessKey = properties.getKeySecret();
 

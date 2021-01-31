@@ -10,6 +10,8 @@ import java.util.List;
 import com.ddg.meituan.common.annotation.ListValue;
 import com.ddg.meituan.common.validgroup.AddGroup;
 import com.ddg.meituan.common.validgroup.UpdateGroup;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Data;
 import org.hibernate.validator.constraints.URL;
 
@@ -82,6 +84,7 @@ public class CategoryEntity implements Serializable {
 	private Date updateTime;
 
 	@TableField(exist = false)
+	@JsonInclude(JsonInclude.Include.NON_EMPTY)
 	private List<CategoryEntity> children;
 
 }
