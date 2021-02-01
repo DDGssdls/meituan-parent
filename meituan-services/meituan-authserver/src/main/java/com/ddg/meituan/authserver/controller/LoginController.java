@@ -1,12 +1,13 @@
 package com.ddg.meituan.authserver.controller;
 
 import com.ddg.meituan.authserver.feign.ThirdPartyFeignService;
+import com.ddg.meituan.authserver.vo.MemberRegisterVo;
 import com.ddg.meituan.common.utils.R;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.*;
+
+import javax.validation.Valid;
 
 /**
  * Description:
@@ -32,5 +33,11 @@ public class LoginController {
 
         return thirdPartyFeignService.getSendPhoneNum(phoneNum);
 
+    }
+
+    @PostMapping("/register")
+    public R register(@RequestBody  @Validated MemberRegisterVo memberRegisterVo){
+
+        return R.ok();
     }
 }

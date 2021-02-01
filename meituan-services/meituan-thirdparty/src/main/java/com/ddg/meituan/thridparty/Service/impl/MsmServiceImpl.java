@@ -52,7 +52,7 @@ public class MsmServiceImpl implements MsmService {
     @Override
     public R sendCode(String phoneNum){
         // 先从redis中进行获取验证码
-        String code = redisTemplate.opsForValue().get(phoneNum);
+        String code = redisTemplate.opsForValue().get(ThirdPartyConstant.REDIS_PHONE_CODE_PREFIX + phoneNum);
         boolean isSend = false;
         // 判断是否是在redis中有值
         if(StringUtils.isEmpty(code)){
