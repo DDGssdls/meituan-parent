@@ -18,4 +18,11 @@ public interface AuthServerConstant {
 
     Long ONE_MIN  = 60L * 1000;
 
+    String REDIS_PHONE_CODE_PREFIX = "redis_phone_code_";
+
+    String PHONE_CODE_MOCK = "111111";
+
+
+
+
 }

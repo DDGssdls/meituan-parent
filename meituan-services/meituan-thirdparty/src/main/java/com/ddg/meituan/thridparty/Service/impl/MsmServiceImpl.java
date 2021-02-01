@@ -65,13 +65,16 @@ public class MsmServiceImpl implements MsmService {
             if (isSend){
                 // 成功发送之后 将数据放到redis中 设置超时时间 5分钟
                 long l = System.currentTimeMillis();
-                redisTemplate.opsForValue().set(phoneNum, code+"_"+ l, ThirdPartyConstant.STORE_TIME, TimeUnit.MINUTES);
+                redisTemplate.opsForValue().set(ThirdPartyConstant.REDIS_PHONE_CODE_PREFIX + phoneNum, code+"_"+ l,
+                        ThirdPartyConstant.STORE_TIME, TimeUnit.MINUTES);
             }
         }else{
             String[] s = code.split("_");
             long l = System.currentTimeMillis();
             if (l - Long.parseLong(s[1]) > ThirdPartyConstant.ONE_MIN){
                 return  R.error("不能在60秒内重复发送");
+            }else {
+
             }
 
         }

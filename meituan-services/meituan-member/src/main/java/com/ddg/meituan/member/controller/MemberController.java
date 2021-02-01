@@ -4,6 +4,8 @@ import java.util.Arrays;
 import java.util.Map;
 
 //import org.apache.shiro.authz.annotation.RequiresPermissions;
+import com.ddg.meituan.common.exception.MeituanSysException;
+import com.ddg.meituan.member.vo.MemberRegisterVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -12,6 +14,7 @@ import com.ddg.meituan.member.service.MemberService;
 import com.ddg.meituan.common.utils.PageUtils;
 import com.ddg.meituan.common.utils.R;
 
+import javax.ws.rs.POST;
 
 
 /**
@@ -81,6 +84,17 @@ public class MemberController {
 		memberService.removeByIds(Arrays.asList(ids));
 
         return R.ok();
+    }
+
+    @PostMapping("/register")
+    public R register(@RequestBody MemberRegisterVo memberRegisterVo) throws MeituanSysException {
+        return memberService.register(memberRegisterVo);
+
+    }
+    @PostMapping("/login")
+    public R login(@RequestBody MemberRegisterVo memberRegisterVo) throws MeituanSysException {
+        return memberService.login(memberRegisterVo);
+
     }
 
 }

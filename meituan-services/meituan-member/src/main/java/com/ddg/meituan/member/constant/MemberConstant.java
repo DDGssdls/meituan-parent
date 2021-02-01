@@ -1,4 +1,4 @@
-package com.ddg.meituan.thridparty.constant;
+package com.ddg.meituan.member.constant;
 
 /**
  * Description:
@@ -9,15 +9,22 @@ package com.ddg.meituan.thridparty.constant;
  * @version 1.0
  * <p>
  * ========================================================================
- * @date 2021/1/31 17:27
+ * @date 2021/2/1 10:30
  * @email: wangzhijie0908@gmail.com
  */
-public interface ThirdPartyConstant {
+public interface MemberConstant {
 
-    Long STORE_TIME = 5L;
+    String USERNAME_COLUMN = "username";
 
-    Long ONE_MIN  = 60L * 1000;
+    String MOBILE_COLUMN = "mobile";
+
+    String PASSWORD_COLUMN = "password";
+
+    String REDIS_CACHE_LOGIN_USER_KEY = "redis_cache_user";
 
     String REDIS_PHONE_CODE_PREFIX = "redis_phone_code_";
 
+    String PHONE_CODE_MOCK = "111111";
+
+    String MEITUAN_USERNAME_PREFIX = "meituan_";
 }

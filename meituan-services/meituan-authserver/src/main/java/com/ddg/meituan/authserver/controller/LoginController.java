@@ -1,13 +1,16 @@
 package com.ddg.meituan.authserver.controller;
 
 import com.ddg.meituan.authserver.feign.ThirdPartyFeignService;
+import com.ddg.meituan.authserver.service.LoginService;
 import com.ddg.meituan.authserver.vo.MemberRegisterVo;
+import com.ddg.meituan.common.exception.MeituanSysException;
 import com.ddg.meituan.common.utils.R;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import javax.ws.rs.POST;
 
 /**
  * Description:
@@ -27,6 +30,8 @@ public class LoginController {
 
     @Autowired
     private ThirdPartyFeignService thirdPartyFeignService;
+    @Autowired
+    private LoginService loginService;
 
     @GetMapping("/send/code/{phoneNum}")
     public R sendCOde(@PathVariable("phoneNum")String phoneNum){
@@ -36,8 +41,15 @@ public class LoginController {
     }
 
     @PostMapping("/register")
-    public R register(@RequestBody  @Validated MemberRegisterVo memberRegisterVo){
-
-        return R.ok();
+    public R register(@RequestBody  @Validated MemberRegisterVo memberRegisterVo) throws MeituanSysException {
+        return  loginService.register(memberRegisterVo);
     }
+
+    @PostMapping("/login")
+    public R login(@RequestBody  MemberRegisterVo memberRegisterVo){
+
+        return loginService.login(memberRegisterVo);
+
+    }
+
 }
