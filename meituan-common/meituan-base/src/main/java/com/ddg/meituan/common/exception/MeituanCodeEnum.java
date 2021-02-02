@@ -4,7 +4,7 @@ public enum MeituanCodeEnum {
 
     VALID_EXCEPTION(10001, "参数校验格式出错"),
     UN_NONE_EXCEPTION(10000, "系统未知异常"),
-    GULI_MAIL_EXCEPTION(40001, ""),
+    MEITUAN_EXCEPTION(40001, "美团系统异常"),
     ELASTICSEARCH_EXCEPTION(11000, "商品上架错误");
 
 

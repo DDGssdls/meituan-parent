@@ -20,7 +20,11 @@ public interface AuthServerConstant {
 
     String REDIS_PHONE_CODE_PREFIX = "redis_phone_code_";
 
+    String REDIS_CACHE_LOGIN_USER_KEY = "redis_cache_user";
+
     String PHONE_CODE_MOCK = "111111";
+
+    String LOGIN_USER = "login_user";
 
 
 

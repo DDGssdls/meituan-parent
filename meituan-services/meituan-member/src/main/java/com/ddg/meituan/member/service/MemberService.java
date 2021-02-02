@@ -7,6 +7,7 @@ import com.ddg.meituan.common.utils.R;
 import com.ddg.meituan.member.entity.MemberEntity;
 import com.ddg.meituan.member.vo.MemberRegisterVo;
 
+import javax.servlet.http.HttpSession;
 import java.util.Map;
 
 /**
@@ -26,6 +27,6 @@ public interface MemberService extends IService<MemberEntity> {
 
     boolean checkUsername(String username);
 
-    R login(MemberRegisterVo memberRegisterVo) throws MeituanSysException;
+    R login(MemberRegisterVo memberRegisterVo, HttpSession session) throws MeituanSysException;
 }
 

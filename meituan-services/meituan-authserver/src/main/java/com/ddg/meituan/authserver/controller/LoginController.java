@@ -1,16 +1,19 @@
 package com.ddg.meituan.authserver.controller;
 
+import com.ddg.meituan.authserver.constant.AuthServerConstant;
 import com.ddg.meituan.authserver.feign.ThirdPartyFeignService;
 import com.ddg.meituan.authserver.service.LoginService;
 import com.ddg.meituan.authserver.vo.MemberRegisterVo;
 import com.ddg.meituan.common.exception.MeituanSysException;
 import com.ddg.meituan.common.utils.R;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
-import javax.ws.rs.POST;
+import javax.servlet.http.HttpSession;
+
 
 /**
  * Description:
@@ -32,6 +35,8 @@ public class LoginController {
     private ThirdPartyFeignService thirdPartyFeignService;
     @Autowired
     private LoginService loginService;
+    @Autowired
+    private StringRedisTemplate redisTemplate;
 
     @GetMapping("/send/code/{phoneNum}")
     public R sendCOde(@PathVariable("phoneNum")String phoneNum){
@@ -46,10 +51,16 @@ public class LoginController {
     }
 
     @PostMapping("/login")
-    public R login(@RequestBody  MemberRegisterVo memberRegisterVo){
-
+    public R login(@RequestBody  MemberRegisterVo memberRegisterVo) throws MeituanSysException{
         return loginService.login(memberRegisterVo);
-
     }
+
+    @GetMapping("/exit")
+    public R exit(@RequestParam("loginUserPhone") String phone){
+        redisTemplate.opsForHash().delete(AuthServerConstant.REDIS_CACHE_LOGIN_USER_KEY, phone);
+        return R.ok();
+    }
+
+
 
 }

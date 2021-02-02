@@ -4,6 +4,8 @@ import com.ddg.meituan.authserver.vo.MemberRegisterVo;
 import com.ddg.meituan.common.exception.MeituanSysException;
 import com.ddg.meituan.common.utils.R;
 
+import javax.servlet.http.HttpSession;
+
 /**
  * Description:
  * ========================================================================

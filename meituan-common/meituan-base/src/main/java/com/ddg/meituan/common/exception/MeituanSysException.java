@@ -5,7 +5,7 @@ package com.ddg.meituan.common.exception;
  * @Date: 2020/5/27 10:53
  * @Description:
  */
-public class MeituanSysException extends Exception {
+public class MeituanSysException extends RuntimeException {
     private String message;
 
     public MeituanSysException() {

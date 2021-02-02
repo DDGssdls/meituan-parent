@@ -7,6 +7,8 @@ import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
+import javax.servlet.http.HttpSession;
+
 /**
  * Description:
  * ========================================================================
@@ -26,7 +28,6 @@ public interface MemberFeignService {
     R register(@RequestBody MemberRegisterVo memberRegisterVo) throws MeituanSysException;
 
     @PostMapping("/member/member/login")
-    R login(@RequestBody MemberRegisterVo memberRegisterVo);
-
+    R login(@RequestBody MemberRegisterVo memberRegisterVo) throws MeituanSysException;
 
 }

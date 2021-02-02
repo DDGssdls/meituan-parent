@@ -12,6 +12,7 @@ import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
+import javax.servlet.http.HttpSession;
 import javax.validation.constraints.NotEmpty;
 
 /**
@@ -68,8 +69,10 @@ public class LoginServiceImpl implements LoginService {
     }
 
     @Override
-    public R login(MemberRegisterVo memberRegisterVo) {
+    public R login(MemberRegisterVo memberRegisterVo) throws MeituanSysException{
         // 首先获取验证码 使用第三方进行登录
+
+
         return memberFeignService.login(memberRegisterVo);
 
     }

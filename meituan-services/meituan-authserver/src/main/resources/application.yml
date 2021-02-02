@@ -20,3 +20,7 @@ server:
   servlet:
     session:
       timeout: 30m
+
+ribbon:
+  ReadTimeout: 30000
+  ConnectTimeout: 30000

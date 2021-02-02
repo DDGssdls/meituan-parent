@@ -5,6 +5,7 @@ import org.hibernate.validator.constraints.Length;
 
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Pattern;
+import java.io.Serializable;
 
 /**
  * Description: 用户注册表单vo
@@ -19,7 +20,9 @@ import javax.validation.constraints.Pattern;
  * @email: wangzhijie0908@gmail.com
  */
 @Data
-public class MemberRegisterVo {
+public class MemberRegisterVo implements Serializable {
+
+    private static final long serialVersionUID = 1L;
 
     @NotEmpty(message = "用户名称必须提交")
     private String userName;

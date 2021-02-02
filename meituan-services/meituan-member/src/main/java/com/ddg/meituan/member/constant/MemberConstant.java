@@ -20,11 +20,17 @@ public interface MemberConstant {
 
     String PASSWORD_COLUMN = "password";
 
+    String DEFAULT_PASSWORD = "111111";
+
     String REDIS_CACHE_LOGIN_USER_KEY = "redis_cache_user";
 
     String REDIS_PHONE_CODE_PREFIX = "redis_phone_code_";
 
+    int MEMBER_CODE_LENGTH = 8;
+
     String PHONE_CODE_MOCK = "111111";
 
     String MEITUAN_USERNAME_PREFIX = "meituan_";
+
+    String LOGIN_USER = "login_user";
 }
