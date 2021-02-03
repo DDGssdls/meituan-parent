@@ -128,6 +128,15 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-redis</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-pool2</artifactId>
+        </dependency>
+        <!--<dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-redis</artifactId>
             <exclusions>
                 <exclusion>
                     <groupId>io.lettuce</groupId>
@@ -136,11 +145,11 @@
             </exclusions>
         </dependency>
 
-        <!--使用上述的 lettuce 会导致堆外内存溢出 使用jedis进行解决-->
+        使用上述的 lettuce 会导致堆外内存溢出 使用jedis进行解决&ndash;&gt;
         <dependency>
             <groupId>redis.clients</groupId>
             <artifactId>jedis</artifactId>
-        </dependency>
+        </dependency>-->
         <!--进行spring session的整合 就是将分布式session放到 redis中进行存储-->
         <dependency>
             <groupId>org.springframework.session</groupId>

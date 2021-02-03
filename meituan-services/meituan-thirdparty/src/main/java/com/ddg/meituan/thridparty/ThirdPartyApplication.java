@@ -18,7 +18,7 @@ import org.springframework.cloud.openfeign.EnableFeignClients;
  * @date 2021/1/28 17:13
  * @email:
  */
-@SpringBootApplication(exclude = DataSourceAutoConfiguration.class)
+@SpringBootApplication( scanBasePackages = "com.ddg.meituan",exclude = DataSourceAutoConfiguration.class)
 @EnableDiscoveryClient
 @EnableFeignClients
 public class ThirdPartyApplication {

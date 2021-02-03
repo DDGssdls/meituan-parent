@@ -21,7 +21,7 @@ import org.springframework.session.data.redis.config.annotation.web.http.EnableR
 @SpringBootApplication(scanBasePackages = "com.ddg.meituan")
 @EnableDiscoveryClient
 @EnableFeignClients
-@EnableRedisHttpSession
+//@EnableRedisHttpSession
 public class MemberApplication {
 
     public static void main(String[] args) {

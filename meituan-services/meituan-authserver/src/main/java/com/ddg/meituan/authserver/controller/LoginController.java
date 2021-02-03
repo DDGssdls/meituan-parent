@@ -9,6 +9,7 @@ import com.ddg.meituan.common.utils.R;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.StringRedisTemplate;
+import org.springframework.util.StringUtils;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -57,6 +58,12 @@ public class LoginController {
 
     @GetMapping("/exit")
     public R exit(@RequestParam("loginUserPhone") String phone){
+        String loginUserStr = (String) redisTemplate.opsForHash().get(AuthServerConstant.REDIS_CACHE_LOGIN_USER_KEY,
+                phone);
+
+        if (StringUtils.isEmpty(loginUserStr)){
+
+        }
         redisTemplate.opsForHash().delete(AuthServerConstant.REDIS_CACHE_LOGIN_USER_KEY, phone);
         return R.ok();
     }
