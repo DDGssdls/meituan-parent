@@ -21,11 +21,11 @@ spring:
           filters:
             - RewritePath=/api/(?<segment>/?.*), /$\{segment}
         - id: oss_route
-          uri: lb://service-oss
+          uri: lb://meituan-third-party
           predicates:
             - Path=/api/oss/**
           filters:
-            - RewritePath=/api/oss/(?<segment>/?.*), /$\{segment}
+            - RewritePath=/api/(?<segment>/?.*), /$\{segment}
         - id: admin_route
           uri: lb://meituan-admin
           predicates:

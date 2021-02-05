@@ -83,4 +83,10 @@ public class BrandController {
         return R.ok();
     }
 
+    @PostMapping("/update/status")
+    public R updateStatus(@RequestBody BrandEntity brandEntity){
+        brandService.updateStatus(brandEntity);
+        return R.ok();
+    }
+
 }

@@ -7,6 +7,7 @@ import org.apache.ibatis.reflection.MetaObject;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
+import java.util.Date;
 
 /**
  * Description:
@@ -24,19 +25,19 @@ import java.time.LocalDateTime;
 @Component
 public class MyMetaObjectHandler implements MetaObjectHandler {
 
-    private static final String CREATE_TIME = "create_time";
+    private static final String CREATE_TIME = "createTime";
 
-    private static final String UPDATE_TIME = "update_time";
+    private static final String UPDATE_TIME = "updateTime";
 
     @Override
     public void insertFill(MetaObject metaObject) {
-        this.setFieldValByName(CREATE_TIME, LocalDateTime.now(), metaObject);
-        this.setFieldValByName(UPDATE_TIME, LocalDateTime.now(), metaObject);
+        this.setFieldValByName(CREATE_TIME, new Date(), metaObject);
+        this.setFieldValByName(UPDATE_TIME, new Date(), metaObject);
     }
 
     @Override
     public void updateFill(MetaObject metaObject) {
-        this.setFieldValByName(UPDATE_TIME, LocalDateTime.now(), metaObject);
+        this.setFieldValByName(UPDATE_TIME, new Date(), metaObject);
     }
 
    /* @Override

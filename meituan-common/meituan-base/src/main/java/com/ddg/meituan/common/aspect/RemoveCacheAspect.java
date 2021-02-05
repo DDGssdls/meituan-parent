@@ -39,8 +39,12 @@ import java.util.concurrent.TimeUnit;
 @Slf4j
 public class RemoveCacheAspect {
 
+    private final StringRedisTemplate stringRedisTemplate;  //注入redis模板
+
     @Autowired
-    private StringRedisTemplate stringRedisTemplate;  //注入redis模板
+    public RemoveCacheAspect(StringRedisTemplate stringRedisTemplate) {
+        this.stringRedisTemplate = stringRedisTemplate;
+    }
 
     @Pointcut("@annotation(com.ddg.meituan.common.annotation.RemoveCache)") //定义切点
     public void removeCachePointCut() {

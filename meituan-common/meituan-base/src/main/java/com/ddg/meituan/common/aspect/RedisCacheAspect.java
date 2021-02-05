@@ -11,6 +11,8 @@ import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
 import org.aspectj.lang.reflect.MethodSignature;
+import org.redisson.api.RLock;
+import org.redisson.api.RedissonClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.redis.core.StringRedisTemplate;
@@ -39,11 +41,19 @@ import java.util.concurrent.TimeUnit;
 @Aspect
 public class RedisCacheAspect {
 
-    @Autowired
-    private StringRedisTemplate stringRedisTemplate;  //注入redis模板
+    private final StringRedisTemplate stringRedisTemplate;  //注入redis模板
+
+    private final RedissonClient redissonClient;
+
     // 默认不进行空值缓存
     @Value("${meituan.rediscache.cachenull:false}")
     private boolean cacheNull;
+
+    @Autowired
+    public RedisCacheAspect(StringRedisTemplate stringRedisTemplate, RedissonClient redissonClient) {
+        this.stringRedisTemplate = stringRedisTemplate;
+        this.redissonClient = redissonClient;
+    }
 
     @Pointcut("@annotation(com.ddg.meituan.common.annotation.RedisCache)") //定义切点
     public void redisCachePointCut() {
@@ -59,12 +69,13 @@ public class RedisCacheAspect {
                 // 注解上的描述
                 Gson gson = new Gson();
                 String redisKey = redisCache.redisKey();
+                String lockName = redisCache.lockName();
                 Integer timeOut = Integer.parseInt(redisCache.timeOut());
                 Class resultObjClass = redisCache.resClass();
                 boolean isList = redisCache.isList();
                 String realValue = stringRedisTemplate.opsForValue().get(redisKey); //获取redis数据
                 if (!StringUtils.isEmpty(realValue)) {
-                    log.info("redisValue:{}", realValue);
+//                    log.info("redisValue:{}", realValue);
                     if (isList) {//如果是list类型的返回数据
                         JsonParser jsonParser = new JsonParser();
                         JsonArray jsonArray = jsonParser.parse(realValue).getAsJsonArray();
@@ -79,19 +90,40 @@ public class RedisCacheAspect {
                     }
                     return gson.fromJson(realValue, resultObjClass);
                 } else {
-                    Object result = point.proceed();
-                    realValue = new Gson().toJson(result);
-                    // 配置是否是可以缓存空值：要是 list类型的数据返回空List 返回的可能是"[]"
-                    if (cacheNull || (!"[]".equals(realValue) && !StringUtils.isEmpty(realValue))){
-                        stringRedisTemplate.opsForValue().set(redisKey, realValue, timeOut, TimeUnit.SECONDS);
+                    // 并发 需要使用分布式锁加锁：
+                    Object result;
+                    if (!StringUtils.isEmpty(lockName)) {
+                        RLock lock = redissonClient.getLock(lockName);
+                        lock.lock();
+                        try {
+                            result = getAndCacheResult(point, redisKey, timeOut);
+                        } finally {
+                            lock.unlock();
+                        }
+                    } else {
+                        result = getAndCacheResult(point, redisKey, timeOut);
                     }
+
                     return result;
                 }
             }
-        }catch (Exception e){
+        } catch (Exception e) {
             log.error("redisCachePointCutError!", e.getMessage());
             return point.proceed();  //异常直接执行方法
         }
         return null;
+    }
+
+    private Object getAndCacheResult(ProceedingJoinPoint point, String redisKey, Integer timeOut) throws Throwable {
+        Object result;
+        String realValue;
+        result = point.proceed();
+
+        realValue = new Gson().toJson(result);
+        // 配置是否是可以缓存空值：要是 list类型的数据返回空List 返回的可能是"[]"
+        if (cacheNull || (!"[]".equals(realValue) && !StringUtils.isEmpty(realValue))) {
+            stringRedisTemplate.opsForValue().set(redisKey, realValue, timeOut, TimeUnit.SECONDS);
+        }
+        return result;
     }
 }

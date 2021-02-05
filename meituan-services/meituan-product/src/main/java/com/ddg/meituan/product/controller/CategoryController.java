@@ -27,6 +27,7 @@ import com.ddg.meituan.common.utils.R;
 @Slf4j
 @RequestMapping("product/category")
 public class CategoryController {
+    
     @Autowired
     private CategoryService categoryService;
 

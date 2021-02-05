@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.extension.service.IService;
 import com.ddg.meituan.common.utils.PageUtils;
 import com.ddg.meituan.product.entity.BrandEntity;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -16,5 +17,9 @@ import java.util.Map;
 public interface BrandService extends IService<BrandEntity> {
 
     PageUtils queryPage(Map<String, Object> params);
+
+    void updateStatus(BrandEntity brandEntity);
+
+    List<BrandEntity> getByBrandIds(List<Long> ids);
 }
 

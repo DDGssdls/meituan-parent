@@ -42,7 +42,8 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryDao, CategoryEntity
     }
 
     @Override
-    @RedisCache(redisKey = "redis_list_tree", resClass = CategoryEntity.class, isList = true)
+    @RedisCache(redisKey = "redis_list_tree", resClass = CategoryEntity.class, isList = true, lockName =
+            "category_lock")
     public List<CategoryEntity> getListWithTree() {
         //首先是获取所有的CategoryEntity
         List<CategoryEntity> list = categoryDao.selectList(null);
@@ -66,7 +67,7 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryDao, CategoryEntity
     }
 
     @Override
-    @RedisCache(redisKey = "redis_key_page", resClass = PageUtils.class)
+
     public PageUtils queryPageById(Map<String, Object> params) {
         String cartIdStr = (String) params.get(ProductConstant.CART_ID);
         QueryWrapper<CategoryEntity> wrapper = new QueryWrapper<>();
@@ -99,8 +100,8 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryDao, CategoryEntity
     // 进行父子结构的组装：
     private CategoryEntity setChildren(CategoryEntity categoryEntity, List<CategoryEntity> list, Integer limit) {
         List<CategoryEntity> collect = list.stream()
-                .filter(categoryEntity1 -> ProductConstant.SHOW_STATUS.equals(categoryEntity1.getShowStatus()))
-                .filter(categoryEntity1 -> categoryEntity.getCatId().equals(categoryEntity1.getParentCid()))
+                .filter(categoryEntity1 -> ProductConstant.SHOW_STATUS.equals(categoryEntity1.getShowStatus())
+                        && categoryEntity.getCatId().equals(categoryEntity1.getParentCid()))
                 .limit(limit).collect(Collectors.toList());
         categoryEntity.setChildren(collect);
         return categoryEntity;

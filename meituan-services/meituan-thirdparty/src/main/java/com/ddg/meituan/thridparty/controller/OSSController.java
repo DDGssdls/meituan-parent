@@ -5,6 +5,7 @@ package com.ddg.meituan.thridparty.controller;
 import com.ddg.meituan.common.utils.R;
 import com.ddg.meituan.thridparty.Service.OSSService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;

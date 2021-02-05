@@ -1,6 +1,9 @@
 package com.ddg.meituan.product.service.impl;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 import java.util.Map;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
@@ -16,6 +19,13 @@ import com.ddg.meituan.product.service.BrandService;
 @Service("brandService")
 public class BrandServiceImpl extends ServiceImpl<BrandDao, BrandEntity> implements BrandService {
 
+    private final BrandDao brandDao;
+
+    @Autowired
+    public BrandServiceImpl(BrandDao brandDao) {
+        this.brandDao = brandDao;
+    }
+
     @Override
     public PageUtils queryPage(Map<String, Object> params) {
         IPage<BrandEntity> page = this.page(
@@ -24,6 +34,16 @@ public class BrandServiceImpl extends ServiceImpl<BrandDao, BrandEntity> impleme
         );
 
         return new PageUtils(page);
+    }
+
+    @Override
+    public void updateStatus(BrandEntity brandEntity) {
+        brandDao.updateById(brandEntity);
+    }
+
+    @Override
+    public List<BrandEntity> getByBrandIds(List<Long> ids) {
+        return brandDao.selectBatchIds(ids);
     }
 
 }

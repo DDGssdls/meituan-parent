@@ -35,6 +35,8 @@ public class OSSServiceImpl implements OSSService {
 
     @Override
     public String uploadFileAvatar(MultipartFile file) {
+
+        if (file == null) return null;
         // Endpoint以杭州为例，其它Region请按实际情况填写。
         String endpoint = ossProperties.getEndpoint();
         // 云账号AccessKey有所有API访问权限，建议遵循阿里云安全最佳实践，创建并使用RAM子账号进行API访问或日常运维，请登录 https://ram.console.aliyun.com 创建。
@@ -46,6 +48,7 @@ public class OSSServiceImpl implements OSSService {
         // 将传入的文件按照时间进行分类 也就是按照日期分类：使用的是工具类进行时间的获取
         String datePath = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy/MM/dd")).toString();
         // 这里的文件名称是加上后缀名称的所以需要将uuid添加到前面
+
         String fileName = datePath+"/"+uuid + file.getOriginalFilename();
 
         log.info(endpoint + accessKeyId + accessKeySecret + bucketName + fileName);
