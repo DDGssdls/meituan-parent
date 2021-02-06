@@ -27,5 +27,9 @@ public interface ProductConstant {
     String CART_ID = "cartId";
     String PARENT_CART_ID = "parent_cid";
 
+    String PRODUCT_ID = "id";
+
     String CART_LEVEL = "cat_level";
+
+    String DEFAULT_IMG = "https://edu-ddg.oss-cn-beijing.aliyuncs.com/2021/02/06/7a940e9b1b7c40d1a9cf2ab7c90eafda1.jpg";
 }
