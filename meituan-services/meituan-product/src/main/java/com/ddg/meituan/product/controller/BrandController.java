@@ -38,6 +38,17 @@ public class BrandController {
         return R.ok().put("page", page);
     }
 
+    /**
+     * 列表
+     */
+    @GetMapping("/list/page")
+    //@RequiresPermissions("product:brand:list")
+    public R getBrandListPage(@RequestParam Map<String, Object> params){
+        PageUtils page = brandService.queryBrandListPage(params);
+
+        return R.ok().put("page", page);
+    }
+
 
     /**
      * 信息

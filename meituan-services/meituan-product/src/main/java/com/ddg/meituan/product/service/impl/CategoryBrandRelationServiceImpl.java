@@ -10,6 +10,7 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.ddg.meituan.common.utils.PageUtils;
 import com.ddg.meituan.common.utils.Query;
 import com.ddg.meituan.product.constant.BrandConstant;
+import com.ddg.meituan.product.constant.ProductConstant;
 import com.ddg.meituan.product.dao.BrandDao;
 import com.ddg.meituan.product.dao.CategoryBrandRelationDao;
 import com.ddg.meituan.product.dao.CategoryDao;

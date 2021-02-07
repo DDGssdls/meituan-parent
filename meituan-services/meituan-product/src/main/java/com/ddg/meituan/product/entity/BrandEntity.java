@@ -81,4 +81,9 @@ public class BrandEntity implements Serializable {
 	@TableField(fill = FieldFill.INSERT_UPDATE)
 	private Date updateTime;
 
+	/**
+	 *  地址：
+	 * */
+	private String address;
+
 }

@@ -44,6 +44,7 @@ public class CategoryBrandRelationController {
 
         return R.ok().put("data", BrandVos);
     }
+
     /**
      * 获取当前品牌的所有分类列表
      */
